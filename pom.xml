@@ -12,6 +12,12 @@
     <url>https://github.com/piaohao/fast-jfinal</url>
     <description>jfinal plugin for actframework</description>
 
+    <parent>
+        <groupId>org.sonatype.oss</groupId>
+        <artifactId>oss-parent</artifactId>
+        <version>7</version>
+    </parent>
+
     <licenses>
         <license>
             <name>The Apache License, Version 2.0</name>
