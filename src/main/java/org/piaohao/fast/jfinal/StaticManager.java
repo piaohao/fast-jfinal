@@ -38,7 +38,6 @@ public class StaticManager {
                     .filter(jar -> jar.getName().equals(Util.DEFAULT_PROPERTIES))
                     .findFirst()
                     .get();
-            log.info("配置文件路径为:{}", defaultPropertiesEntry.getName());
             DefaultConfig.init(jarFile.getInputStream(defaultPropertiesEntry));
             jarFile.stream()
                     .filter(jar -> jar.getName().startsWith(DefaultConfig.staticPath + "/") && !jar.isDirectory())

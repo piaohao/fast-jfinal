@@ -34,11 +34,11 @@ public class Util {
         boolean isJar = false;
         if (resourceURL.startsWith("jar:")) {
             projectPath = StrUtil.subPre(resourceURL, resourceURL.indexOf("!/" + DEFAULT_PROPERTIES));
-            projectPath = StrUtil.subSuf(projectPath, "jar:file:/".length());
+            projectPath = StrUtil.subSuf(projectPath, "jar:file:".length());
             isJar = true;
         } else {
             projectPath = StrUtil.subPre(resourceURL, resourceURL.indexOf("/" + DEFAULT_PROPERTIES));
-            projectPath = StrUtil.subSuf(projectPath, "file:/".length());
+            projectPath = StrUtil.subSuf(projectPath, "file:".length());
         }
         ProjectType projectType = new ProjectType();
         projectType.setPath(projectPath);
@@ -54,15 +54,17 @@ public class Util {
         String path = projectType.getPath();
         if (projectType.isJar()) {
             try {
-                URL url = new URL("jar:" + path + "!" + filePath);
+                URL url = new URL("jar:file:" + path + "!" + filePath);
                 return url.openStream();
-            } catch (IOException e) {
+            } catch (Exception e) {
+                log.error("读取jar文件错误!", e);
                 return null;
             }
         } else {
             try {
                 return new FileInputStream(path + filePath);
             } catch (FileNotFoundException e) {
+                log.error("读取文件错误!", e);
                 return null;
             }
         }

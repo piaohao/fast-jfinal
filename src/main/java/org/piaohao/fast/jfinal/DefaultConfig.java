@@ -28,4 +28,9 @@ public class DefaultConfig {
         tomcatBaseDir = Convert.toStr(properties.get(Util.TOMCAT_BASE_DIR), "/tmp/tomcat");
         configClass = Convert.toStr(properties.get(Util.CONFIG_CLASS));
     }
+
+    public static String get(String key) {
+        return properties.getProperty(key);
+    }
+
 }
