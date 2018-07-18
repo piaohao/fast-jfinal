@@ -16,6 +16,10 @@ import org.apache.tomcat.util.descriptor.web.FilterMap;
 @Slf4j
 public class Bootstrap {
 
+    public static void main(String[] args) {
+        run(args);
+    }
+
     public static void run(String[] args) {
         long start = System.currentTimeMillis();
         DefaultConfig.init();
