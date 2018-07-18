@@ -1,10 +1,6 @@
 package org.piaohao.fast.jfinal;
 
-import cn.hutool.core.convert.Convert;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Properties;
+import com.jfinal.kit.PropKit;
 
 public class DefaultConfig {
 
@@ -14,23 +10,14 @@ public class DefaultConfig {
     public static String tomcatBaseDir;
     public static String configClass;
 
-    public static Properties properties = new Properties();
-
-    public static void init(InputStream inputStream) {
-        try {
-            properties.load(inputStream);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        serverPort = Convert.toInt(properties.get(Util.SERVER_PORT), 8080);
-        contextPath = Convert.toStr(properties.get(Util.CONTEXT_PATH), "");
-        staticPath = Convert.toStr(properties.get(Util.STATIC_PATH), "static");
-        tomcatBaseDir = Convert.toStr(properties.get(Util.TOMCAT_BASE_DIR), "/tmp/tomcat");
-        configClass = Convert.toStr(properties.get(Util.CONFIG_CLASS));
-    }
-
-    public static String get(String key) {
-        return properties.getProperty(key);
+    public static void init() {
+        PropKit.use(Util.DEFAULT_PROPERTIES);
+        serverPort = PropKit.getInt(Util.SERVER_PORT, 8080);
+        contextPath = PropKit.get(Util.CONTEXT_PATH, "");
+        staticPath = PropKit.get(Util.STATIC_PATH, "static");
+        tomcatBaseDir = PropKit.get(Util.TOMCAT_BASE_DIR, "/tmp/tomcat");
+        configClass = PropKit.get(Util.CONFIG_CLASS);
+        PropKit.useless(Util.DEFAULT_PROPERTIES);
     }
 
 }

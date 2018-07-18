@@ -1,38 +1,33 @@
 package org.piaohao.fast.jfinal;
 
+import cn.hutool.core.util.ClassUtil;
 import cn.hutool.core.util.StrUtil;
 import com.jfinal.core.JFinalFilter;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.catalina.Context;
 import org.apache.catalina.LifecycleException;
-import org.apache.catalina.core.StandardContext;
+import org.apache.catalina.servlets.DefaultServlet;
 import org.apache.catalina.startup.Tomcat;
 import org.apache.catalina.startup.Tomcat.FixContextListener;
 import org.apache.catalina.webresources.StandardRoot;
 import org.apache.tomcat.util.descriptor.web.FilterDef;
 import org.apache.tomcat.util.descriptor.web.FilterMap;
 
-import java.io.IOException;
-
 @Slf4j
 public class Bootstrap {
 
     public static void run(String[] args) {
         long start = System.currentTimeMillis();
-        try {
-            StaticManager.init();
-        } catch (IOException e) {
-            log.error("静态资源信息初始化失败!", e);
-            System.exit(-1);
-        }
+        DefaultConfig.init();
 
         Tomcat tomcat = new Tomcat();
         Integer serverPort = DefaultConfig.serverPort;
         tomcat.setPort(serverPort);
-        tomcat.setBaseDir(DefaultConfig.tomcatBaseDir);
 
         String contextPath = DefaultConfig.contextPath;
-        StandardContext context = new StandardContext();
-        context.setPath(contextPath);
+        Context context = null;
+        context = tomcat.addContext(contextPath, ClassUtil.getClassPath());
+        context.setName("jfinal");
         context.addLifecycleListener(new FixContextListener());
         {
             FilterDef filterDef = new FilterDef();
@@ -56,7 +51,7 @@ public class Bootstrap {
             context.setResources(standardRoot);
         }
         tomcat.getHost().addChild(context);
-        tomcat.addServlet(contextPath, "defaultServlet", new StaticServlet());
+        tomcat.addServlet(contextPath, "defaultServlet", new DefaultServlet());
         context.addServletMappingDecoded("/*", "defaultServlet");
 
         try {
