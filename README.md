@@ -15,7 +15,7 @@ jfinal项目以embed-tomcat的方式运行,无须部署tomcat
 </dependency>
 ````
 
-加入assembly打包插件
+加入appassembler打包插件
 ````
 <plugin>
     <groupId>org.codehaus.mojo</groupId>
