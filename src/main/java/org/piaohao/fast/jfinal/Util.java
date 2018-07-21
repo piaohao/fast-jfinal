@@ -11,6 +11,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 
+/**
+ * 简单的工具类,包含一些常亮定义
+ *
+ * @author piaohao
+ */
 @Slf4j
 public class Util {
 
@@ -22,10 +27,22 @@ public class Util {
     public static final String TOMCAT_BASE_DIR = "tomcat.base.dir";
     public static final String CONFIG_CLASS = "jfinal.config.class";
 
+    public static final String SERVER_TYPE = "server.type";
+
     @Data
     public static class ProjectType {
         private String path;
         private boolean isJar;
+    }
+
+    public enum ServerType {
+        TOMCAT("tomcat"), UNDERTOW("undertow");
+
+        private String name;
+
+        ServerType(String name) {
+            this.name = name;
+        }
     }
 
     public static ProjectType getProjectType() {
