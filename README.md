@@ -1,5 +1,5 @@
 # fast-jfinal
-jfinal项目以embed-tomcat的方式运行,无须部署tomcat
+jfinal项目以embed-tomcat或undertow的方式运行,无须打war包,无续部署tomcat
 
 用appassembler-maven-plugin打包，然后运行bin目录中的脚本即可。
 
@@ -11,7 +11,7 @@ jfinal项目以embed-tomcat的方式运行,无须部署tomcat
 <dependency>
     <groupId>org.piaohao</groupId>
     <artifactId>fast-jfinal</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.3</version>
 </dependency>
 ````
 
@@ -65,7 +65,8 @@ jfinal项目以embed-tomcat的方式运行,无须部署tomcat
 ### 2.fast-jfinal.properties
 ````
 server.port=8080  #启动端口
-server.context.path=    #项目上下文路径
+server.type=tomcat #或者undertow,不指定的情况下,以undertow运行
+server.context.path=/    #项目上下文路径
 tomcat.base.dir=/tmp/tomcat    #tomcat临时文件目录，可不设置
 jfinal.config.class=org.piaohao.fast.jfinal.demo.DemoConfig    #JfinalConfig配置类
 ````
